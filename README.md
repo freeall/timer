@@ -1,7 +1,5 @@
 # timer
 
-## Description
-
 A basic countdown timer with a few shortcuts
 
 ## Keys
@@ -20,11 +18,11 @@ Adds one second and stops the timer
 
 ### Down/left
 
+Subtracts one second and stops the timer
+
 ### H
 
 Displays help
-
-Subtracts one second and stops the timer
 
 ## License
 
