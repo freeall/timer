@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+		<style type="text/css">
+			.center {
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				text-align: center;
+				font-size: 400px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="center"></div>
+		<script type="text/javascript">
+			var START = 180;
+			var seconds = START;
+
+			var update = function() {
+				var neg = seconds < 0;
+				var secs = Math.abs(seconds);
+				var minutes = Math.floor(secs / 60);
+
+				minutes = minutes < 10 ? '0' + minutes : minutes;
+				secs = secs - 60*minutes;
+				secs = secs < 10 ? '0' + secs : secs;
+
+				$('.center')
+					.text('' + minutes + ':' + secs)
+					.css({
+						color: 'black'
+					});
+
+				$('body').css({ 'background-color': 'white' });
+
+				if (seconds <= 30) {
+					$('.center').css({ color:'white' });
+					$('body').css({ 'background-color': 'black'});
+				}
+
+				if (seconds <= 5) {
+					$('.center').css({ color:'black' });
+					$('body').css({ 'background-color': 'yellow'});
+				}
+
+				if (seconds < 0) {
+					if (!(secs % 2)) {
+						$('.center').css({ color:'red' });
+						$('body').css({ 'background-color': 'white'});
+					} else {
+						$('.center').css({ color:'white' });
+						$('body').css({ 'background-color': 'red'});
+					}
+				}
+			};
+
+			var timer;
+			var running = false;
+			var start = function() {
+				running = true;
+				timer = setInterval(function() {
+					seconds--;
+					update();
+				}, 1000);
+			};
+			var stop = function() {
+				running = false;
+				clearInterval(timer);
+			};
+
+			$('body').keydown(function(e) {
+				var ESC = 27;
+				var SPACE = 32;
+				var RIGHT = 39;
+				var LEFT = 37;
+				var UP = 38;
+				var DOWN = 40;
+
+				var pause = function(t) {
+					seconds = t;
+					stop();
+					update();
+				};
+
+				if (e.which === ESC) pause(START);
+				if (e.which === UP || e.which === RIGHT) pause(seconds + 1);
+				if (e.which === DOWN || e.which === LEFT) pause(seconds - 1);
+
+				if (e.which === SPACE) {
+					if (running) {
+						stop();
+					} else {
+						start();
+					}
+				}
+			});
+
+			update();
+		</script>
+	</body>
+</html>
